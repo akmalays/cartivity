@@ -59,7 +59,7 @@ function Task() {
             </Typography>
           </Grid>
           <Grid>
-            <Button sx={LayoutStyles.actionButton}>See all</Button>
+            <Button sx={LayoutStyles.actionButtonNoHover}>See all</Button>
           </Grid>
         </Grid>
 

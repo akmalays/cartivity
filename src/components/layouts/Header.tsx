@@ -80,17 +80,17 @@ function Header() {
           <Grid container display="flex" justifyContent="center" alignItems="center" gap={2}>
             {pageType !== "shop" ? (
               <>
-                <Button sx={LayoutStyles.actionButton}>
+                <Button sx={LayoutStyles.actionButtonNoHover}>
                   <ShareOutlinedIcon fontSize="small" sx={{mr: 1}} />
                   Share
                 </Button>
-                <Button onClick={createTask} sx={LayoutStyles.actionButton}>
+                <Button onClick={createTask} sx={LayoutStyles.actionButtonNoHover}>
                   <AddOutlinedIcon fontSize="small" sx={{mr: 1}} />
                   Add Task
                 </Button>
               </>
             ) : (
-              <Button onClick={changeToTaskPage} sx={LayoutStyles.actionButton}>
+              <Button onClick={changeToTaskPage} sx={LayoutStyles.actionButtonNoHover}>
                 <ArrowBackIosNewOutlinedIcon fontSize="small" sx={{mr: 1}} />
                 Back
               </Button>

@@ -21,6 +21,11 @@ export const LayoutStyles: StylesSxProps = {
       border: "1px solid black",
     },
   },
+  actionButtonNoHover: {
+    ...baseButtonStyle,
+    backgroundColor: "black",
+    color: "white",
+  },
   OkButton: {
     ...baseButtonStyle,
     "&:hover": {
