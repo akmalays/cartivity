@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
 
+import GlobalToaster from '../snackbar/globalSnackbar';
+
 interface DefaultLayoutProps {
   children: React.ReactNode;
 }
@@ -13,9 +15,9 @@ function DefaultLayout({children}: DefaultLayoutProps) {
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f9f9f9",
-        p: 2,
         overflowY: "hidden",
       }}>
+      <GlobalToaster />
       <Box
         sx={{
           border: "1px solid #d3d3d3",

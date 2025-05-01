@@ -36,11 +36,6 @@ export const LayoutStyles: StylesSxProps = {
   },
   EditButton: {
     ...baseButtonStyle,
-    "&:hover": {
-      backgroundColor: "#f57c00",
-      color: "white",
-      border: "1px solid #f57c00",
-    },
   },
   shopCategoryButton: {
     ...baseButtonStyle,

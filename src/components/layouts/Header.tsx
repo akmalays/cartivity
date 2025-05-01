@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
@@ -15,10 +16,22 @@ import { openConfirmationModal } from '../../store/modal/modalStore';
 import { setCategoryActive, setIsShopPageLoading } from '../../store/shop/shopStore';
 import { LayoutStyles } from './LayoutStyles';
 
+interface TaskStats {
+  totalHours: number;
+  completedTasks: number;
+  pendingTasks: number;
+}
+
 function Header() {
   const dispatch = useDispatch();
+  const [stats, setStats] = useState<TaskStats>({
+    totalHours: 0,
+    completedTasks: 0,
+    pendingTasks: 0,
+  });
   const {pageType} = useSelector((state: RootState) => state.userStore);
   const {categoryActive} = useSelector((state: RootState) => state.shopStore);
+  const tasks = useSelector((state: RootState) => state.taskStore.tasks);
   const {changeToTaskPage} = useChangePage();
 
   function createTask() {
@@ -27,6 +40,7 @@ function Header() {
         type: "create",
         title: "Create your new task here",
         description: "Fill the input field below to create your task",
+        onConfirm: () => {},
       })
     );
   }
@@ -52,6 +66,17 @@ function Header() {
 
     return `${dayName}, ${date} ${monthName} ${year}`;
   }
+  function updateStats() {
+    setStats({
+      totalHours: tasks.reduce((sum, task) => sum + task.duration, 0),
+      completedTasks: tasks.filter((task) => task.done).length,
+      pendingTasks: tasks.filter((task) => !task.done).length,
+    });
+  }
+
+  useEffect(() => {
+    updateStats();
+  }, [tasks]);
 
   return (
     <div>
@@ -131,7 +156,7 @@ function Header() {
               <AccessAlarmsIcon sx={{mb: 0.5}} />
               <Grid display="flex" alignItems="center" gap={1}>
                 <Typography fontWeight="bold" fontSize={20}>
-                  12hrs
+                  {stats.totalHours} hrs
                 </Typography>
                 <Typography fontWeight="light">Total Time</Typography>
               </Grid>
@@ -150,7 +175,7 @@ function Header() {
               <TaskAltIcon sx={{mb: 0.5}} />
               <Grid display="flex" alignItems="center" gap={1}>
                 <Typography fontWeight="bold" fontSize={20}>
-                  20 Tasks
+                  {stats.completedTasks} Tasks
                 </Typography>
                 <Typography fontWeight="light">Completed</Typography>
               </Grid>
@@ -169,7 +194,7 @@ function Header() {
               <HourglassTopIcon sx={{mb: 0.5}} />
               <Grid display="flex" alignItems="center" gap={1}>
                 <Typography fontWeight="bold" fontSize={20}>
-                  7 Tasks
+                  {stats.pendingTasks} Tasks
                 </Typography>
                 <Typography fontWeight="light">In-Progress</Typography>
               </Grid>

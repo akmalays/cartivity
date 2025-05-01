@@ -46,6 +46,11 @@ function Topbar() {
 
   function moveToShopPage() {
     changeToShopPage();
+    navigate("/home");
+  }
+
+  function logOut() {
+    closeAccountMenu();
     navigate("/");
   }
 
@@ -223,7 +228,7 @@ function Topbar() {
           Settings
         </MenuItem>
         <Divider />
-        <MenuItem onClick={closeAccountMenu}>
+        <MenuItem onClick={logOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

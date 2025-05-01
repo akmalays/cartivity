@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
@@ -7,37 +8,51 @@ import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRen
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 
+import { RootState } from '../../app/store';
 import { openConfirmationModal } from '../../store/modal/modalStore';
+import { deleteTask, toggleTaskDone } from '../../store/task/taskStore';
+import { ITask } from '../../types/dummy';
 import ConfirmationModal from '../modals/ConfirmationModal';
 import { LayoutStyles } from './LayoutStyles';
 
 function Task() {
-  const dispatch = useDispatch();
+  const [showAllTasks, setShowAllTasks] = useState(false);
 
-  function deleteTask() {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootState) => state.taskStore.tasks);
+
+  function deleteTaskAction(taskId: number, title: string) {
     dispatch(
       openConfirmationModal({
         type: "delete",
-        title: "Are you sure to delete the task?",
+        title: `Are you sure to delete " ${title} " task?`,
         description: "Warning, deleted task cant be recover anymore",
+        onConfirm: () => {
+          dispatch(deleteTask(taskId));
+        },
       })
     );
   }
-  function editTask() {
+  function editTaskAction(task: ITask) {
     dispatch(
       openConfirmationModal({
         type: "edit",
-        title: "Edit remaining task?",
+        title: `Edit " ${task.title} " remaining task?`,
         description: "Fill the input field below to edit your task",
+        initialData: task,
       })
     );
   }
-  function finishTask() {
+
+  function finishTaskAction(taskId: number, title: string) {
     dispatch(
       openConfirmationModal({
         type: "finish",
-        title: "Finish your task?",
+        title: `Finish " ${title} " task?`,
         description: "Finished task will setup as underlined words",
+        onConfirm: () => {
+          dispatch(toggleTaskDone(taskId));
+        },
       })
     );
   }
@@ -59,11 +74,14 @@ function Task() {
             </Typography>
           </Grid>
           <Grid>
-            <Button sx={LayoutStyles.actionButtonNoHover}>See all</Button>
+            <Button onClick={() => setShowAllTasks(!showAllTasks)} sx={LayoutStyles.actionButtonNoHover}>
+              {showAllTasks ? "Show less" : "See all"}
+            </Button>
           </Grid>
         </Grid>
 
         {/* task content */}
+
         <Grid
           container
           direction="column"
@@ -72,53 +90,59 @@ function Task() {
             overflowY: "auto",
             display: "block",
           }}>
-          <Grid display="flex" justifyContent="space-between">
-            <Typography fontWeight={"bold"} fontSize={18}>
-              Title
-            </Typography>
-            <Tooltip title="Delete Task" placement="top">
-              <CloseOutlinedIcon
-                onClick={deleteTask}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "#ed3419",
-                  },
-                }}
-              />
-            </Tooltip>
-          </Grid>
-          <Typography fontWeight={"bold"} fontSize={14}>
-            Duration : 20 Hours
-          </Typography>
-          <Typography fontSize={14} mt={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id laboriosam iusto blanditiis corrupti eum voluptatem sapiente sunt culpa cumque quod.
-          </Typography>
-          <Grid container display="flex" justifyContent="flex-end" gap={2} mt={2} mb={4}>
-            <Tooltip title="Edit Task" placement="top">
-              <DriveFileRenameOutlineOutlinedIcon
-                onClick={editTask}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "#f57c00",
-                  },
-                }}
-              />
-            </Tooltip>
-            <Tooltip title="Finish Task" placement="top">
-              <ChecklistOutlinedIcon
-                onClick={finishTask}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "#388e3c",
-                  },
-                }}
-              />
-            </Tooltip>
-          </Grid>
-          <Divider />
+          {tasks.slice(0, showAllTasks ? tasks.length : 1).map((task, index) => {
+            return (
+              <Grid sx={{p: 2}} key={index}>
+                <Grid display="flex" justifyContent="space-between">
+                  <Typography sx={{textDecoration: task.done ? "line-through" : "none"}} fontWeight={"bold"} fontSize={18}>
+                    {task.title}
+                  </Typography>
+                  <Tooltip title="Delete Task" placement="top">
+                    <CloseOutlinedIcon
+                      onClick={() => deleteTaskAction(task?.id, task?.title)}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "#ed3419",
+                        },
+                      }}
+                    />
+                  </Tooltip>
+                </Grid>
+                <Typography sx={{textDecoration: task.done ? "line-through" : "none"}} fontWeight={"bold"} fontSize={14}>
+                  Duration : {task.duration} hrs
+                </Typography>
+                <Typography sx={{textDecoration: task.done ? "line-through" : "none"}} fontSize={14} mt={2}>
+                  {task.desc}
+                </Typography>
+                <Grid container display="flex" justifyContent="flex-end" gap={2} mt={2} mb={4}>
+                  <Tooltip title="Edit Task" placement="top">
+                    <DriveFileRenameOutlineOutlinedIcon
+                      onClick={() => editTaskAction(task)}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "#f57c00",
+                        },
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Finish Task" placement="top">
+                    <ChecklistOutlinedIcon
+                      onClick={() => finishTaskAction(task?.id, task?.title)}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "#388e3c",
+                        },
+                      }}
+                    />
+                  </Tooltip>
+                </Grid>
+                <Divider />
+              </Grid>
+            );
+          })}
         </Grid>
       </Grid>
       <ConfirmationModal />

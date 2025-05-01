@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import modalStore from '../store/modal/modalStore';
 import shopStore from '../store/shop/shopStore';
+import taskStore from '../store/task/taskStore';
 import userStore from '../store/user/userStore';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     modalStore: modalStore,
     userStore: userStore,
     shopStore: shopStore,
+    taskStore: taskStore,
   },
 });
 
