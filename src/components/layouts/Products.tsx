@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Box, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
 
 import ShkraImages from '../../assets/images/shoes/shkra/shkra_banner.webp';
 
