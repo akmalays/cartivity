@@ -76,7 +76,7 @@ function Header() {
 
   useEffect(() => {
     updateStats();
-  }, [tasks]);
+  }, [tasks, updateStats]);
 
   return (
     <div>

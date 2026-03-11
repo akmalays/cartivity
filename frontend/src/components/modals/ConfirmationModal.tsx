@@ -72,10 +72,6 @@ function ConfirmationModal() {
     }
   };
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-  }
-
   function closeModal() {
     dispatch(closeConfirmationModal());
   }
