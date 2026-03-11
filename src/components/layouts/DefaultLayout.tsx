@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
+import {Box} from "@mui/material";
 
-import GlobalToaster from '../snackbar/globalSnackbar';
+import GlobalToaster from "../snackbar/globalSnackbar";
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
