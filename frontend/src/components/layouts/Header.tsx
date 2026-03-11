@@ -66,17 +66,17 @@ function Header() {
 
     return `${dayName}, ${date} ${monthName} ${year}`;
   }
-  function updateStats() {
-    setStats({
-      totalHours: tasks.reduce((sum, task) => sum + task.duration, 0),
-      completedTasks: tasks.filter((task) => task.done).length,
-      pendingTasks: tasks.filter((task) => !task.done).length,
-    });
-  }
 
   useEffect(() => {
+    const updateStats = () => {
+      setStats({
+        totalHours: tasks.reduce((sum, task) => sum + task.duration, 0),
+        completedTasks: tasks.filter((task) => task.done).length,
+        pendingTasks: tasks.filter((task) => !task.done).length,
+      });
+    };
     updateStats();
-  }, [tasks, updateStats]);
+  }, [tasks]);
 
   return (
     <div>
