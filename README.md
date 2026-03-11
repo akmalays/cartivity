@@ -1,58 +1,87 @@
-## 📚 cartivity apps
+# Task Manager
 
-> Aplikasi task manager dan online shop sederhana menggunakan react js, typescript
+Full-stack task & shop management application built with React, Node.js, and Supabase.
 
-### 📦 Struktur Project
+## Project Structure
 
-bookly-apps/ ├── apps/ │ ├── bookly-ui/ # Frontend (Next.js + Tailwind CSS) │ └── bookly-api/ # Backend (Hono.js + Drizzle ORM) ├── packages/ # (Opsional) Shared utils/libs ├── package.json # Root workspace config
-
-### ⚙️ Requirements
-
-- **Node.js ≥ 18.18.0**
-
-📌 Disarankan menggunakan `nvm` untuk mengelola versi Node.
-
-### 🚀 Getting Started
-
-#### 1. Clone Repository
-
-```bash
-git clone https://github.com/akmalays/bookly.git
-cd bookly
+```
+/task-manager
+  /frontend         - React application
+  /backend          - Express.js API server
+  README.md         - This file
 ```
 
-#### 2. Install Dependencies
+## Quick Start
+
+### Frontend
 
 ```bash
-yarn install
+cd frontend
+npm install
+npm start
 ```
 
-#### 3. 🛠️ Scripts
+Frontend runs on `http://localhost:3000`
 
-📄 Frontend (Next.js)
+### Backend
 
 ```bash
-yarn install
+cd backend
+nvm use v22
+npm install
+npm run dev
 ```
 
-⚙️ Backend (Hono.js)
+Backend runs on `http://localhost:5000`
 
-```bash
-yarn install
+## Environment Variables
+
+### Frontend (`frontend/.env.local`)
+```
+REACT_APP_API_URL=http://localhost:5000
 ```
 
----
+### Backend (`backend/.env`)
+```
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_anon_key
+SERVICE_ROLE_KEY=your_service_role_key
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
 
-#### 4. 🧰 Tools & Stack
+## Deployment
 
-🧠 Yarn Workspaces — Monorepo manager
+- **Frontend**: Vercel (https://cartivity.vercel.app)
+- **Backend**: Railway (https://cartivity-production.up.railway.app)
 
-🌐 Next.js — Frontend app (React, App Router)
+## API Documentation
 
-💨 Tailwind CSS — Styling
+See [backend/API_DOCUMENTATION.md](backend/API_DOCUMENTATION.md) for complete API documentation.
 
-⚡ Hono.js — Lightweight backend framework
+## Features
 
-🧱 Drizzle ORM — Typesafe SQL ORM
+- User authentication with JWT
+- Task management (CRUD operations)
+- Product catalog with categories
+- Responsive React UI
+- Supabase integration
 
----
+## Tech Stack
+
+### Frontend
+- React
+- TypeScript
+- Redux Toolkit
+- React Router
+- Material-UI
+
+### Backend
+- Node.js / Express
+- Supabase (Authentication & Database)
+- JWT
+- CORS
+
+## License
+
+MIT
