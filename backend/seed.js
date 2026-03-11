@@ -1,0 +1,358 @@
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
+const shopData = {
+  new_product: [
+    {
+      id: "reebok-2",
+      name: "Reebok Speedwick Running Tee",
+      desc: "Moisture-wicking running shirt designed to keep you dry.",
+      available_color: ["black", "lime green"],
+      pics: "/images/reebok-speedwick.png",
+      price: "Rp. 220.000,-",
+      promo_price: "Rp. 170.000,-",
+      tag: "new_product",
+      category: "apparel / men outfit",
+      rating: "4.5",
+      reviews: "1,1k",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "reebok-3",
+      name: "Reebok Reflective Running Shirt",
+      desc: "Lightweight and reflective running shirt for early mornings or evenings.",
+      available_color: ["neon yellow", "gray"],
+      pics: "/images/reebok-reflective.png",
+      price: "Rp. 260.000,-",
+      promo_price: "Rp. 200.000,-",
+      tag: "new_product",
+      category: "apparel / men outfit",
+      rating: "4.6",
+      reviews: "980",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "hoka-1",
+      name: "HOKA One One Clifton 9",
+      desc: "Premium cushioned running shoes for long distance.",
+      available_color: ["blue", "white"],
+      pics: "/images/hoka-clifton.png",
+      price: "Rp. 2.200.000,-",
+      promo_price: "Rp. 1.800.000,-",
+      tag: "new_product",
+      category: "shoes / men",
+      rating: "4.9",
+      reviews: "2,5k",
+      size_available: ["41", "42", "44"],
+    },
+    {
+      id: "oncloud-1",
+      name: "On Cloud X",
+      desc: "Versatile performance running shoes with minimalist look.",
+      available_color: ["black", "gray"],
+      pics: "/images/oncloud-x.png",
+      price: "Rp. 2.500.000,-",
+      promo_price: "Rp. 2.100.000,-",
+      tag: "new_product",
+      category: "shoes / men",
+      rating: "4.7",
+      reviews: "1,8k",
+      size_available: ["40", "42", "43"],
+    },
+  ],
+  best_seller: [
+    {
+      id: "skechers-1",
+      name: "Skechers GO DRI Running Tee",
+      desc: "Lightweight and moisture-wicking shirt designed for optimal breathability.",
+      available_color: ["navy", "white"],
+      pics: "/images/skechers-go-dri.png",
+      price: "Rp. 230.000,-",
+      promo_price: "Rp. 185.000,-",
+      tag: "best_seller",
+      category: "apparel / men outfit",
+      rating: "4.4",
+      reviews: "870",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "skechers-2",
+      name: "Skechers Motion Tech Tee",
+      desc: "Performance shirt with stretch fabric for dynamic movement.",
+      available_color: ["black", "gray"],
+      pics: "/images/skechers-motion-tech.png",
+      price: "Rp. 250.000,-",
+      promo_price: "Rp. 199.000,-",
+      tag: "best_seller",
+      category: "apparel / men outfit",
+      rating: "4.5",
+      reviews: "1,2k",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "skechers-3",
+      name: "Skechers Reflect Fit Shirt",
+      desc: "Comfortable fit with reflective details for night running.",
+      available_color: ["neon green", "charcoal"],
+      pics: "/images/skechers-reflect-fit.png",
+      price: "Rp. 270.000,-",
+      promo_price: "Rp. 215.000,-",
+      tag: "best_seller",
+      category: "apparel / men outfit",
+      rating: "4.6",
+      reviews: "950",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "nike-1",
+      name: "Nike Air Zoom Pegasus 39",
+      desc: "Popular running shoes with great cushioning and support.",
+      available_color: ["black", "white"],
+      pics: "/images/nike-pegasus.png",
+      price: "Rp. 1.600.000,-",
+      promo_price: "Rp. 1.200.000,-",
+      tag: "best_seller",
+      category: "shoes / men",
+      rating: "4.8",
+      reviews: "5,2k",
+      size_available: ["40", "42", "43"],
+    },
+  ],
+  special_price: [
+    {
+      id: "asics-1",
+      name: "ASICS Gel-Kayano 30",
+      desc: "High-stability running shoes designed for long distances.",
+      available_color: ["blue", "gray"],
+      pics: "/images/asics-kayano.png",
+      price: "Rp. 2.000.000,-",
+      promo_price: "Rp. 1.400.000,-",
+      category: "shoes / men",
+      tag: "special_price",
+      rating: "4.6",
+      reviews: "3,9k",
+      size_available: ["41", "42", "44"],
+    },
+    {
+      id: "asics-2",
+      name: "ASICS Novablast 5",
+      desc: "Lightweight and responsive running shoes built for daily training and energized cushioning.",
+      available_color: ["white", "black", "lime"],
+      pics: "/images/asics-novablast5.png",
+      price: "Rp. 2.100.000,-",
+      promo_price: "Rp. 1.550.000,-",
+      category: "shoes / men",
+      tag: "special_price",
+      rating: "4.7",
+      reviews: "2,8k",
+      size_available: ["40", "41", "42", "43"],
+    },
+    {
+      id: "reebok-1",
+      name: "Reebok Training Tee",
+      desc: "Classic fit tee ideal for training and casual wear.",
+      available_color: ["navy", "gray"],
+      pics: "/images/reebok-tee.png",
+      price: "Rp. 180.000,-",
+      promo_price: "Rp. 130.000,-",
+      category: "apparel / men outfit",
+      tag: "special_price",
+      rating: "4.3",
+      reviews: "900",
+      size_available: ["M", "L", "XL"],
+    },
+    {
+      id: "ortus-1",
+      name: "Ortuseight Catalyst Tempo",
+      desc: "Affordable and stylish running shoes with good grip.",
+      available_color: ["orange", "black"],
+      pics: "/images/ortuseight-tempo.png",
+      price: "Rp. 400.000,-",
+      promo_price: "Rp. 320.000,-",
+      category: "shoes / men",
+      tag: "special_price",
+      rating: "4.1",
+      reviews: "670",
+      size_available: ["40", "41", "42"],
+    },
+    {
+      id: "ortus-2",
+      name: "Ortuseight Solar 1.2",
+      desc: "Lightweight running shoes with breathable mesh upper for everyday training.",
+      available_color: ["navy", "white"],
+      pics: "/images/ortuseight-solar.png",
+      price: "Rp. 2.420.000,-",
+      promo_price: "Rp. 1.340.000,-",
+      category: "shoes / men",
+      tag: "special_price",
+      rating: "4.3",
+      reviews: "820",
+      size_available: ["40", "41", "42", "43"],
+    },
+    {
+      id: "ortus-3",
+      name: "Ortuseight Shakra",
+      desc: "Comfort-oriented shoes with cushioned sole and stylish design, perfect for short runs and daily wear.",
+      available_color: ["black", "gray"],
+      pics: "/images/ortuseight-shakra.png",
+      price: "Rp. 1.250.000,-",
+      promo_price: "Rp. 960.000,-",
+      tag: "special_price",
+      category: "shoes / men",
+      rating: "4.4",
+      reviews: "900",
+      size_available: ["40", "41", "42", "44"],
+    },
+  ],
+};
+
+const taskData = [
+  {
+    id: 1,
+    title: "Playing Game",
+    duration: 2,
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id laboriosam iusto blanditiis corrupti eum voluptatem sapiente sunt culpa cumque quod.",
+    done: false,
+  },
+  {
+    id: 2,
+    title: "Read a Book",
+    duration: 1.5,
+    desc: "A fascinating story about history and culture that broadens the mind and challenges perspectives.",
+    done: false,
+  },
+  {
+    id: 3,
+    title: "Workout",
+    duration: 1,
+    desc: "Intense strength training session focused on upper body and cardio endurance.",
+    done: true,
+  },
+  {
+    id: 4,
+    title: "Online Meeting",
+    duration: 2,
+    desc: "Team sync to align project milestones and discuss upcoming features and deadlines.",
+    done: true,
+  },
+  {
+    id: 5,
+    title: "Grocery Shopping",
+    duration: 0.5,
+    desc: "Quick trip to the supermarket for weekly essentials and fresh produce.",
+    done: false,
+  },
+  {
+    id: 6,
+    title: "Code Review",
+    duration: 1,
+    desc: "Reviewed pull requests and provided feedback on React components and styling.",
+    done: true,
+  },
+  {
+    id: 7,
+    title: "Meditation",
+    duration: 1,
+    desc: "Daily mindfulness practice to reduce stress and improve focus and clarity.",
+    done: true,
+  },
+  {
+    id: 8,
+    title: "Laundry",
+    duration: 1,
+    desc: "Washed, dried, and folded clothes while listening to a podcast.",
+    done: false,
+  },
+  {
+    id: 9,
+    title: "Watch Documentary",
+    duration: 1.5,
+    desc: "Watched an insightful documentary about climate change and sustainability.",
+    done: true,
+  },
+  {
+    id: 10,
+    title: "Write Blog Post",
+    duration: 2,
+    desc: "Drafted a blog post on JavaScript performance optimization techniques.",
+    done: false,
+  },
+];
+
+const seedProducts = async () => {
+  try {
+    // Clear existing
+    await supabase.from('products').delete().neq('id', 'dummy');
+
+    const products = [];
+    Object.keys(shopData).forEach(tag => {
+      shopData[tag].forEach(item => {
+        products.push(item);
+      });
+    });
+
+    const { data, error } = await supabase
+      .from('products')
+      .insert(products);
+
+    if (error) throw error;
+    console.log('Products seeded');
+  } catch (error) {
+    console.error('Error seeding products:', error);
+  }
+};
+
+const seedTasks = async () => {
+  try {
+    // Get service role key for admin access
+    const serviceRoleKey = process.env.SERVICE_ROLE_KEY;
+    
+    if (!serviceRoleKey) {
+      console.log('Tasks seeding skipped - SERVICE_ROLE_KEY not found in .env');
+      console.log('To seed tasks, add SERVICE_ROLE_KEY=your_service_role_key to .env');
+      return;
+    }
+
+    // Create admin client with service role
+    const { createClient } = require('@supabase/supabase-js');
+    const supabaseAdmin = createClient(process.env.SUPABASE_URL, serviceRoleKey);
+
+    // Get first user
+    const { data: users, error: usersError } = await supabaseAdmin.auth.admin.listUsers();
+    
+    if (usersError || !users || users.users.length === 0) {
+      console.log('No users found. Register a user first before seeding tasks.');
+      return;
+    }
+
+    const userId = users.users[0].id;
+    
+    // Remove id field and add user_id
+    const tasksWithUserId = taskData.map(({ id, ...task }) => ({
+      ...task,
+      user_id: userId
+    }));
+
+    // Clear existing tasks first
+    await supabaseAdmin.from('tasks').delete().eq('user_id', userId);
+
+    const { data, error } = await supabaseAdmin
+      .from('tasks')
+      .insert(tasksWithUserId);
+
+    if (error) throw error;
+    console.log(`Tasks seeded successfully for user ${userId} (${tasksWithUserId.length} tasks)`);
+  } catch (error) {
+    console.error('Error seeding tasks:', error);
+  }
+};
+
+const runSeed = async () => {
+  await seedProducts();
+  await seedTasks();
+  process.exit();
+};
+
+runSeed();
