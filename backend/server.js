@@ -15,6 +15,15 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 app.use(cors());
 app.use(express.json());
 
+// Health check
+app.get('/', (req, res) => {
+  res.json({ message: 'Task Manager Backend is running', status: 'online' });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth')(supabase));
 app.use('/api/tasks', require('./routes/tasks')(supabase));
