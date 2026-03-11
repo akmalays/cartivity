@@ -14,6 +14,7 @@ import {
     Tooltip, Typography
 } from '@mui/material';
 
+import CartivityLogo from '../../assets/images/shoes/cartivity_logo.png';
 import { RootState } from '../../app/store';
 import { useChangePage } from '../../hooks/layouts/useChangePage';
 import { LayoutStyles } from './LayoutStyles';
@@ -57,6 +58,15 @@ function Topbar() {
   return (
     <>
       <Box display={"flex"} justifyContent={"space-between"} alignItems="center">
+        <Box display="flex" alignItems="center" gap={1}>
+          <img 
+            src={CartivityLogo} 
+            alt="Cartivity Logo" 
+            style={{height: 40, cursor: "pointer"}}
+            onClick={moveToShopPage}
+          />
+          <Typography sx={{fontWeight: "bold", fontSize: 18}}>Cartivity</Typography>
+        </Box>
         <Grid
           onClick={moveToShopPage}
           display="flex"
