@@ -28,6 +28,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', require('./routes/auth')(supabase));
 app.use('/api/tasks', require('./routes/tasks')(supabase));
 app.use('/api/shop', require('./routes/shop')(supabase));
+app.use('/api/google-calendar', require('./routes/googleCalendar')(supabase));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
